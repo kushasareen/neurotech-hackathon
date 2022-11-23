@@ -25,7 +25,7 @@ def get_current_datetime():
 
 def background_thread():
     while True:
-        data = startStream()
+        data = startStream() # Calling startstream() from datastream.py to start collecting the signals
         print("sending")
         socketio.emit('data', {'value': data, "date": get_current_datetime()})
         socketio.sleep(1)

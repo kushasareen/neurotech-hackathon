@@ -27,7 +27,7 @@ timestamp = BoardShim.get_timestamp_channel(board_id)
 board.prepare_session()
 board.start_stream()
 
-def startStream():
+def startStream(fig=None):
     
     """Lists to store separated eeg signals"""
     eeg1 = []
@@ -59,6 +59,7 @@ def startStream():
     eegdf.columns = eegdf_col_names
     timedf = pd.DataFrame(np.transpose(data[timestamp]))
 
+    #print("Showing data")
         #appending eeg data to lists
     eeg1.extend(eegdf.iloc[:, 0].values)
     eeg2.extend(eegdf.iloc[:, 1].values)
@@ -77,12 +78,19 @@ def startStream():
         # eeg15.extend(eegdf.iloc[:, 14].values)
         # eeg16.extend(eegdf.iloc[:, 15].values)
     timex.extend(timedf.iloc[:, 0].values)  # timestamps
-    #plt.cla()
+    if(fig != None):
+    
+        plt.cla()
         # plotting eeg data
-    #plt.plot(timex, eeg1, label="Channel 1", color="red")
-    #plt.plot(timex, eeg2, label="Channel 2", color="blue")
-    #plt.plot(timex, eeg3, label="Channel 3", color="orange")
-    #plt.plot(timex, eeg4, label="Channel 4", color="purple")
+        ax1 = fig.add_subplot(121)
+        ax2 = fig.add_subplot(122)
+    
+        ax1.plot(timex, eeg1,label="Channel 1", color="red")
+        ax2.plot(timex, eeg2, label="Channel 2", color="blue")
+    # plt.plot(timex, eeg1, label="Channel 1", color="red")
+    # plt.plot(timex, eeg2, label="Channel 2", color="blue")
+    # plt.plot(timex, eeg3, label="Channel 3", color="orange")
+    # plt.plot(timex, eeg4, label="Channel 4", color="purple")
         # plt.plot(timex, eeg5, label="Channel 5", color="red")
         # plt.plot(timex, eeg6, label="Channel 6", color="blue")
         # plt.plot(timex, eeg7, label="Channel 7", color="orange")
@@ -95,8 +103,11 @@ def startStream():
         # plt.plot(timex, eeg14, label="Channel 14", color="blue")
         # plt.plot(timex, eeg15, label="Channel 15", color="orange")
         # plt.plot(timex, eeg16, label="Channel 16", color="purple")
-    #plt.tight_layout()
-    keep_alive = False  # resetting stream so that matplotlib can plot data
+        plt.tight_layout()
+    
+    
+    
+      # resetting stream so that matplotlib can plot data
     '''relaxation score calculation'''
     relax_score = round(random() * 100, 3)#Need to change to ML code
     return relax_score
@@ -109,13 +120,15 @@ def main(i):
     plt.title("Live EEG stream from Brainflow", fontsize=15)
     plt.ylabel("Data in millivolts", fontsize=15)
     plt.xlabel("\nTime", fontsize=10)
+    fig = plt.gcf()
     keep_alive = True
     
     
     print(board.get_board_data_count())
     while keep_alive == True:
         
-        startStream()
+        startStream(fig)
+        keep_alive = False
     
         
   

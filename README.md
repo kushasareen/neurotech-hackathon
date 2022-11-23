@@ -1,1 +1,0 @@
-# neurotech-hackathon

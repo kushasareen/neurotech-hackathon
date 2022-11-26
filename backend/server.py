@@ -30,9 +30,6 @@ def background_thread():
         socketio.emit('data', {'value': data, "date": get_current_datetime()})
         socketio.sleep(1)
         
-        
-
-
 """
 Decorator for connect
 """
@@ -52,6 +49,10 @@ Decorator for disconnect
 @socketio.on('disconnect')
 def disconnect():
     print('Client disconnected',  request.sid)
+
+@app.route("/start", methods=["GET", "POST"])
+def start():
+    startStream()
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

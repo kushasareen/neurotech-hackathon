@@ -116,7 +116,7 @@ def startStream(fig=None):
     """relaxation score calculation"""
     relax_score = round(random() * 100, 3)# Just some random garbage value. Need to change to ML code
     return relax_score
-        
+
 def main(i):
 
     

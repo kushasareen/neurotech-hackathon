@@ -114,7 +114,7 @@ def startStream(fig=None):
     relax_score = 100*get_relaxation(input_data, n_levels = n_levels) / n_levels # Let's try it
     print(relax_score)
     return relax_score
-        
+
 def main(i):
 
     # style.use('fivethirtyeight')
